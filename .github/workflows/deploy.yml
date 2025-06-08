@@ -24,10 +24,14 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          cd frontend
+          npm install
 
       - name: Build project
-        run: npm run build
+        run: |
+          cd frontend
+          npm run build
 
       - name: Install Vercel CLI
         run: npm install -g vercel
@@ -35,6 +39,7 @@ jobs:
       - name: Deploy to Vercel
         id: deploy
         run: |
+          cd frontend
           DEPLOYMENT_URL=$(vercel deploy --prod --token="${{ secrets.VERCEL_TOKEN }}" --yes)
           echo "deployment_url=$DEPLOYMENT_URL" >> $GITHUB_OUTPUT
           echo "✅ Production deployment completed successfully!"
